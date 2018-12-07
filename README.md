@@ -60,3 +60,4 @@ Output Example:
     Logger.Instance.LogInfo(typeof(Program), "This is some message);
     . . .
     Logger.Instance.Dispose();
+
