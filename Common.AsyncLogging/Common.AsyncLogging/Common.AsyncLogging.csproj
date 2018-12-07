@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>.Net Standard common logging abstractions to make logging calls asynchronous in an application.  The abstration allows for any logging library (Log4Net and etc) to be used as the library abstractions will "spool" the log entries.</Description>
+    <Authors>Jeff Bramlett</Authors>
+    <Copyright>December 2018 @ Jeff Bramlett</Copyright>
+    <PackageLicenseUrl>https://github.com/JeffBramlett/Common.Logging/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>logging,asynchronous</PackageTags>
+  </PropertyGroup>
+
+</Project>
