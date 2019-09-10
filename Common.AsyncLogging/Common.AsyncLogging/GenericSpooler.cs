@@ -334,13 +334,13 @@ namespace Common.AsyncLogging
             else // Finalizer only cleanup
             {
                 FinalizeDispose();
-
-                // if the worker thread is still running on finalize, abort it!
-                if (_processWorkerThread != null)
-                    _processWorkerThread.Abort();
-
-                _processWorkerThread = null;
             }
+
+            // if the worker thread is still running on finalize, abort it!
+            if (_processWorkerThread != null)
+                _processWorkerThread.Abort();
+
+            _processWorkerThread = null;
             _isDisposed = true;
         }
 

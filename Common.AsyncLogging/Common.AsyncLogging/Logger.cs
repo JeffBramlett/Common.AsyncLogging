@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Common.AsyncLogging
 {
     /// <summary>
-    /// Abstraction of a Logger 
+    /// Singleton or Object of a Logger
     /// </summary>
     public class Logger : GenericSpooler<LogEntry>, ILogger
     {
@@ -24,13 +24,18 @@ namespace Common.AsyncLogging
             {
                 if (_appMetaData == null)
                 {
-                    Assembly asm = Assembly.GetEntryAssembly();
-                    _appMetaData = new ApplicationMetaData()
+                    _appMetaData = new ApplicationMetaData();
+                    try
                     {
-                        ApplicationName = asm.FullName,
-                        Environment = Environment.UserDomainName,
-                        OS = Environment.OSVersion.Platform.ToString()
-                    };
+                        _appMetaData.Environment = Environment.UserDomainName;
+                        _appMetaData.OS = Environment.OSVersion.Platform.ToString();
+
+                        Assembly asm = Assembly.GetEntryAssembly();
+                        _appMetaData.ApplicationName = asm.FullName;
+                    }
+                    catch 
+                    {
+                    }
                 }
                 return _appMetaData;
             }
@@ -109,8 +114,8 @@ namespace Common.AsyncLogging
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
-                    CallerFile = caller,
-                    CallerMethod = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
                     LineNo = lineNo,
                     ModuleName = type.Name
                 }
@@ -156,8 +161,8 @@ namespace Common.AsyncLogging
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
-                    CallerFile = caller,
-                    CallerMethod = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
                     LineNo = lineNo,
                     ModuleName = type.Name
                 }
@@ -198,8 +203,8 @@ namespace Common.AsyncLogging
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
-                    CallerFile = caller,
-                    CallerMethod = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
                     LineNo = lineNo,
                     ModuleName = type.Name
                 }
@@ -245,8 +250,8 @@ namespace Common.AsyncLogging
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
-                    CallerFile = caller,
-                    CallerMethod = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
                     LineNo = lineNo,
                     ModuleName = type.Name
                 }
@@ -292,8 +297,8 @@ namespace Common.AsyncLogging
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
-                    CallerFile = caller,
-                    CallerMethod = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
                     LineNo = lineNo,
                     ModuleName = type.Name
                 }
@@ -324,7 +329,7 @@ namespace Common.AsyncLogging
         #region Disposable Support
         public override void GeneralDispose()
         {
-            base.GeneralDispose();
+            
         }
         #endregion
     }

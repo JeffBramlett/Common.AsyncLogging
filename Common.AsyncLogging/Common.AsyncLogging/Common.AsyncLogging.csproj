@@ -8,9 +8,14 @@
     <PackageLicenseUrl>https://github.com/JeffBramlett/Common.AsyncLogging/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>logging,asynchronous</PackageTags>
-    <PackageProjectUrl>https://github.com/JeffBramlett/Common.AsyncLogging</PackageProjectUrl>
+    <PackageProjectUrl>https://bluejaywebsvc.com/OpenSource/AsyncLogging</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeffBramlett/Common.AsyncLogging</RepositoryUrl>
-    <PackageReleaseNotes>Initial commit</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fixes</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
+    <Company>Blue Jay Web Services</Company>
   </PropertyGroup>
 
 </Project>
