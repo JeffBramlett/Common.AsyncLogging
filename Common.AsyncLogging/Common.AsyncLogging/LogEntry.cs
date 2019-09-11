@@ -23,6 +23,7 @@ namespace Common.AsyncLogging
     {
         #region fields
         ApplicationMetaData _appMetadata;
+        private IList<CustomPair> _customPairs;
         #endregion
 
         #region Properties
@@ -51,7 +52,18 @@ namespace Common.AsyncLogging
         /// </summary>
         public DateTimeOffset Timestamp { get; set; }
 
-        public CustomPair[] CustomPairs { get; set; }
+        /// <summary>
+        /// Custom key/value pair Collection in the logEntry
+        /// </summary>
+        public IList<CustomPair> CustomPairs
+        {
+            get
+            {
+                _customPairs = _customPairs ?? new List<CustomPair>();
+                return _customPairs;
+            }
+            set { _customPairs = value; }
+        }
 
         /// <summary>
         /// The application data for this log entry

@@ -338,7 +338,7 @@ namespace Common.AsyncLogging
 
             // if the worker thread is still running on finalize, abort it!
             if (_processWorkerThread != null)
-                _processWorkerThread.Abort();
+                _processWorkerThread.Interrupt();
 
             _processWorkerThread = null;
             _isDisposed = true;
