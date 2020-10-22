@@ -35,10 +35,10 @@ namespace LogTestInCore
             };
 
             Stopwatch sw = Stopwatch.StartNew();
-            logger.LogWarning(typeof(Program), "with MORE", null, null, logPairs);
+            logger.LogWarning(typeof(Program), "with MORE", "LM", null, null, logPairs);
             sw.Stop();
 
-            logger.LogInfo(typeof(Program), "How much time to log", sw.Elapsed);
+            logger.LogInfo(typeof(Program), "How much time to log", "LM", sw.Elapsed);
         }
 
         private static void LogWithException(Logger logger)
@@ -50,7 +50,7 @@ namespace LogTestInCore
             }
             catch (Exception ex)
             {
-                logger.LogError(typeof(Program), "Divide by Zero test", null, ex);
+                logger.LogError(typeof(Program), "Divide by Zero test", "", null, ex);
 
             }
         }
@@ -66,7 +66,7 @@ namespace LogTestInCore
 
             serializerSettings.Converters.Add(new StringEnumConverter());
 
-            string contents = JsonConvert.SerializeObject(logEntry, serializerSettings);
+            string contents = JsonConvert.SerializeObject(logEntry.ToKeyValuePairs());
 
             switch (logEntry.Level)
             {

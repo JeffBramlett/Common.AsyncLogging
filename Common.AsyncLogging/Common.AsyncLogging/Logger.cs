@@ -27,11 +27,12 @@ namespace Common.AsyncLogging
                     _appMetaData = new ApplicationMetaData();
                     try
                     {
-                        _appMetaData.Environment = Environment.UserDomainName;
-                        _appMetaData.OS = Environment.OSVersion.Platform.ToString();
+                        _appMetaData.MachineName = Environment.MachineName;
+                        _appMetaData.OS = Environment.OSVersion.VersionString;
 
                         Assembly asm = Assembly.GetEntryAssembly();
-                        _appMetaData.ApplicationName = asm.FullName;
+                        _appMetaData.ApplicationName = asm.GetName().Name;
+                        _appMetaData.Version = asm.GetName().Version.ToString();
                     }
                     catch 
                     {
@@ -90,6 +91,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">a user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -97,7 +99,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogDebug(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -110,6 +113,7 @@ namespace Common.AsyncLogging
                 ApplicationMetadata = AppMetaData,
                 Message = message,
                 Exception = ex,
+                CorrelationId = correlationId,
                 Level = LogLevels.Debug,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
@@ -137,6 +141,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">a user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -144,7 +149,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogError(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -156,6 +162,7 @@ namespace Common.AsyncLogging
             {
                 ApplicationMetadata = AppMetaData,
                 Message = message,
+                CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Error,
                 Timestamp = DateTimeOffset.Now,
@@ -179,6 +186,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">a user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -186,7 +194,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogFatal(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -198,6 +207,7 @@ namespace Common.AsyncLogging
             {
                 ApplicationMetadata = AppMetaData,
                 Message = message,
+                CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Fatal,
                 Timestamp = DateTimeOffset.Now,
@@ -226,6 +236,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">a user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -233,7 +244,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogInfo(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -245,6 +257,7 @@ namespace Common.AsyncLogging
             {
                 ApplicationMetadata = AppMetaData,
                 Message = message,
+                CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Info,
                 Timestamp = DateTimeOffset.Now,
@@ -273,6 +286,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">a user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -280,7 +294,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogWarning(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -292,6 +307,7 @@ namespace Common.AsyncLogging
             {
                 ApplicationMetadata = AppMetaData,
                 Message = message,
+                CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Warning,
                 Timestamp = DateTimeOffset.Now,
@@ -321,7 +337,6 @@ namespace Common.AsyncLogging
 
         private static void DefaultWriteLogEntry(LogEntry logEntry)
         {
-
         }
 
         #endregion

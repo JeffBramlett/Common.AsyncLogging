@@ -16,9 +16,14 @@ namespace Common.AsyncLogging
         public string ApplicationName { get; set; }
 
         /// <summary>
+        /// Application Version
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
         /// The environment the application is executing in
         /// </summary>
-        public string Environment { get; set; }
+        public string MachineName { get; set; }
 
         /// <summary>
         /// The operating system the application is executing in

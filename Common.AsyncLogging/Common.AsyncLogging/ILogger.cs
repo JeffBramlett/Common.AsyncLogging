@@ -21,6 +21,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">User supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -28,7 +29,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         void LogDebug(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -41,6 +43,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">The user supplied correlationId</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -48,7 +51,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         void LogInfo(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -61,6 +65,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">the user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -68,7 +73,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         void LogWarning(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -81,6 +87,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">the user supplied correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -88,7 +95,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         void LogError(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
@@ -101,6 +109,7 @@ namespace Common.AsyncLogging
         /// </summary>
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
+        /// <param name="correlationId">the correlation id</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
         /// <param name="customPairs">Custom key-value pair enumeration</param>
@@ -108,7 +117,8 @@ namespace Common.AsyncLogging
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         void LogFatal(Type type, 
-            string message = "", 
+            string message = "",
+            string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
             IList<CustomPair> customPairs = null,
