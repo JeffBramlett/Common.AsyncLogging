@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,10 @@ namespace Common.AsyncLogging
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Bitwise enum to limit logging by log levels
+        /// </summary>
+        public LogLevels AllowedLogLevels { get; set; }
 
         private ApplicationMetaData AppMetaData
         {
@@ -29,6 +34,8 @@ namespace Common.AsyncLogging
                     {
                         _appMetaData.MachineName = Environment.MachineName;
                         _appMetaData.OS = Environment.OSVersion.VersionString;
+                        _appMetaData.ProcessId = Process.GetCurrentProcess().Id;
+                        _appMetaData.ProcessName = Process.GetCurrentProcess().ProcessName;
 
                         Assembly asm = Assembly.GetEntryAssembly();
                         _appMetaData.ApplicationName = asm.GetName().Name;
@@ -47,20 +54,21 @@ namespace Common.AsyncLogging
         /// <summary>
         /// Singleton Ctor (must set the write action for log entries)
         /// </summary>
-        public Logger():
+        /// <param name="allowedLogLevels">Bitwise enum to set allowed logging from configuration</param>
+        public Logger(LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error):
             base(DefaultWriteLogEntry)
         {
-
+            AllowedLogLevels = allowedLogLevels;
         }
 
         /// <summary>
         /// Default Ctor
         /// </summary>
         /// <param name="writeAction">write Action for log entries (spooled to this delegate)</param>
-        public Logger(Action<LogEntry> writeAction) :
+        public Logger(Action<LogEntry> writeAction, LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error) :
             base(writeAction)
         {
-
+            AllowedLogLevels = allowedLogLevels;
         }
         #endregion
 
@@ -108,6 +116,9 @@ namespace Common.AsyncLogging
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
+            if (!AllowedLogLevels.HasFlag(LogLevels.Debug))
+                return;
+
             var logEntry = new LogEntry()
             {
                 ApplicationMetadata = AppMetaData,
@@ -132,6 +143,7 @@ namespace Common.AsyncLogging
             {
                 logEntry.CustomPairs = new List<CustomPair>(customPairs).ToArray();
             }
+
 
             AddItem(logEntry);
         }
@@ -158,6 +170,9 @@ namespace Common.AsyncLogging
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
+            if (!AllowedLogLevels.HasFlag(LogLevels.Error))
+                return;
+
             var logEntry = new LogEntry()
             {
                 ApplicationMetadata = AppMetaData,
@@ -203,6 +218,9 @@ namespace Common.AsyncLogging
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
+            if (!AllowedLogLevels.HasFlag(LogLevels.Fatal))
+                return;
+
             var logEntry = new LogEntry()
             {
                 ApplicationMetadata = AppMetaData,
@@ -253,6 +271,9 @@ namespace Common.AsyncLogging
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
+            if (!AllowedLogLevels.HasFlag(LogLevels.Info))
+                return;
+
             var logEntry = new LogEntry()
             {
                 ApplicationMetadata = AppMetaData,
@@ -303,6 +324,9 @@ namespace Common.AsyncLogging
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
+            if (!AllowedLogLevels.HasFlag(LogLevels.Warning))
+                return;
+
             var logEntry = new LogEntry()
             {
                 ApplicationMetadata = AppMetaData,

@@ -11,6 +11,11 @@ namespace Common.AsyncLogging
     public interface ILogger : IDisposable
     {
         /// <summary>
+        /// Bitwise enum to limit logging by log levels
+        /// </summary>
+        LogLevels AllowedLogLevels { get; set; }
+
+        /// <summary>
         /// Sets the write action for Log entries (the logger asynchrously spools to this action)
         /// </summary>
         /// <param name="writeAction">the delegate that writes the LogEntry, or, passes to other logger (i.e. Log4Net)</param>

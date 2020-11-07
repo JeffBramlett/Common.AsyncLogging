@@ -29,6 +29,16 @@ namespace Common.AsyncLogging
         /// The operating system the application is executing in
         /// </summary>
         public string OS { get; set; }
+
+        /// <summary>
+        /// The current process id
+        /// </summary>
+        public int ProcessId { get; set; }
+
+        /// <summary>
+        /// The current process name
+        /// </summary>
+        public string ProcessName { get; set; }
         #endregion
     }
 }

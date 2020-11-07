@@ -27,7 +27,7 @@ namespace MultiThreadedLogging
             for (var i = 0; i < 100; i++)
             {
                 var something = "Loop: 1\tStep:" + i;
-                Logger.Instance.LogInfo(typeof(Program), something);
+                Logger.Instance.LogInfo(typeof(Program), something, Guid.NewGuid().ToString());
             }
         }
 
@@ -37,7 +37,7 @@ namespace MultiThreadedLogging
             for (var i = 0; i < 100; i++)
             {
                 var something = "Loop: 2\tStep:" + i;
-                Logger.Instance.LogInfo(typeof(Program), something);
+                Logger.Instance.LogInfo(typeof(Program), something, Guid.NewGuid().ToString());
             }
         }
 
@@ -45,11 +45,11 @@ namespace MultiThreadedLogging
         {
             ShowLogEntryInConsole(logEntry);
         }
-
+        
         private static void ShowLogEntryInConsole(LogEntry logEntry)
         {
-            string contentToLog = string.Format("{0} - {1}", logEntry.Timestamp, logEntry.Message);
-            Console.WriteLine(contentToLog);
+            string contentToLog = string.Format("{0} - {1}: {2}", logEntry.Timestamp, logEntry.Message, logEntry.CorrelationId);
+            Console.WriteLine(logEntry.ToKeyValuePairs());
         }
 
     }

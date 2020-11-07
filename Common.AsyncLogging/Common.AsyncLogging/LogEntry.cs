@@ -7,13 +7,14 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Enumeration of logging levels
     /// </summary>
-    public enum LogLevels
+    [Flags]
+    public enum LogLevels: short
     {
-        Debug,
-        Info,
-        Warning,
-        Error,
-        Fatal
+        Debug = 0,
+        Info = 1,
+        Warning = 2,
+        Error = 4,
+        Fatal = 8
     }
 
     /// <summary>
@@ -176,6 +177,8 @@ namespace Common.AsyncLogging
             sb.Append($"ApplicationVersion={ApplicationMetadata.Version}, ");
             sb.Append($"MachineName={ApplicationMetadata.MachineName}, ");
             sb.Append($"OS={ApplicationMetadata.OS}, ");
+            sb.Append($"ProcessId={ApplicationMetadata.ProcessId}, ");
+            sb.Append($"ProcessName={ApplicationMetadata.ProcessName}, ");
 
             sb.Append($"ModuleName={ModuleMetadata.ModuleName}, ");
             sb.Append($"CallerFile={ModuleMetadata.CallerFile}, ");

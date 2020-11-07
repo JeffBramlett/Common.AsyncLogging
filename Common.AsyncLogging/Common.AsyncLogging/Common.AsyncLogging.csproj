@@ -8,15 +8,19 @@
     <PackageLicenseUrl>https://github.com/JeffBramlett/Common.AsyncLogging/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>logging,asynchronous</PackageTags>
-    <PackageProjectUrl>https://bluejaywebsvc.com/OpenSource/AsyncLogging</PackageProjectUrl>
+    <PackageProjectUrl>http://www.aboutjeffbramlett.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeffBramlett/Common.AsyncLogging</RepositoryUrl>
-    <PackageReleaseNotes>Added Correlation Id to logging
+    <PackageReleaseNotes>Made LogLevels bitwise to allow configuration to control logging by level
+Added Process ID and ProcessName to ApplicationMetadata
+Update Application Metadata
+Added Correlation Id to logging
 Numeric elasped time added (double for elasped milliseconds)</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.7</Version>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <Version>1.0.9</Version>
+    <AssemblyVersion>1.0.9.0</AssemblyVersion>
     <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
-    <Company>Blue Jay Web Services</Company>
+    <Company>About Jeff Bramlett</Company>
+    <FileVersion>1.0.9.0</FileVersion>
   </PropertyGroup>
 
 </Project>
