@@ -11,7 +11,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Singleton or Object of a Logger
     /// </summary>
-    public class Logger : GenericSpooler<LogEntry>, ILogger
+    public class CommonLogger : GenericSpooler<LogEntry>, ILogger
     {
         #region Private
         private ApplicationMetaData _appMetaData;
@@ -55,9 +55,15 @@ namespace Common.AsyncLogging
         /// Singleton Ctor (must set the write action for log entries)
         /// </summary>
         /// <param name="allowedLogLevels">Bitwise enum to set allowed logging from configuration</param>
-        public Logger(LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error):
-            base(DefaultWriteLogEntry)
+        public CommonLogger()
         {
+            SetWriteAction(DefaultWriteLogEntry);
+            AllowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error;
+        }
+
+        public CommonLogger(LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error) 
+        {
+            SetWriteAction(DefaultWriteLogEntry);
             AllowedLogLevels = allowedLogLevels;
         }
 
@@ -65,7 +71,7 @@ namespace Common.AsyncLogging
         /// Default Ctor
         /// </summary>
         /// <param name="writeAction">write Action for log entries (spooled to this delegate)</param>
-        public Logger(Action<LogEntry> writeAction, LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error) :
+        public CommonLogger(Action<LogEntry> writeAction, LogLevels allowedLogLevels = LogLevels.Debug | LogLevels.Info | LogLevels.Warning | LogLevels.Fatal | LogLevels.Error) :
             base(writeAction)
         {
             AllowedLogLevels = allowedLogLevels;
@@ -73,7 +79,7 @@ namespace Common.AsyncLogging
         #endregion
 
         #region Singleton
-        private static Lazy<Logger> _instance = new Lazy<Logger>();
+        private static Lazy<CommonLogger> _instance = new Lazy<CommonLogger>();
 
         public static ILogger Instance
         {
@@ -359,8 +365,14 @@ namespace Common.AsyncLogging
 
         #region privates
 
-        private static void DefaultWriteLogEntry(LogEntry logEntry)
+        private void DefaultWriteLogEntry(LogEntry logEntry)
         {
+            WriteLogEntry(logEntry);
+        }
+
+        protected virtual void WriteLogEntry(LogEntry logEntry)
+        {
+
         }
 
         #endregion

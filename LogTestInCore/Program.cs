@@ -13,7 +13,7 @@ namespace LogTestInCore
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            Logger logger = new Logger(WriteTheLogEntry);
+            CommonLogger logger = new CommonLogger(WriteTheLogEntry);
 
             sw.Stop();
 
@@ -27,7 +27,7 @@ namespace LogTestInCore
             logger.Dispose();
         }
 
-        private static void LogMore(Logger logger)
+        private static void LogMore(CommonLogger logger)
         {
             List<CustomPair> logPairs = new List<CustomPair>()
             {
@@ -41,7 +41,7 @@ namespace LogTestInCore
             logger.LogInfo(typeof(Program), "How much time to log", "LM", sw.Elapsed);
         }
 
-        private static void LogWithException(Logger logger)
+        private static void LogWithException(CommonLogger logger)
         {
             try
             {

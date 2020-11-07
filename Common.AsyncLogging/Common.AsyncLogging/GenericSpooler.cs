@@ -89,6 +89,27 @@ namespace Common.AsyncLogging
         #endregion
 
         #region Ctors and Dtors
+
+        public GenericSpooler()
+        {
+            _inputs = new ConcurrentQueue<ItemMetaData>();
+            SpoolerAction = ProcessSpooledItem;
+
+            _trafficEvent = new AutoResetEvent(false);
+            _exitEvent = new AutoResetEvent(false);
+            _itemActionEvent = new ManualResetEvent(true);
+
+            _operationHandles = new WaitHandle[2];
+            _operationHandles[0] = _trafficEvent;
+            _operationHandles[1] = _exitEvent;
+
+        }
+
+        protected virtual void ProcessSpooledItem(T item)
+        {
+
+        }
+
         /// <summary>
         /// Default Ctor.  The callback is required.
         /// </summary>

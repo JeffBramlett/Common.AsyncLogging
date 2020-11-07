@@ -15,7 +15,7 @@ namespace UsingLog4NetExample
     {
         static void Main(string[] args)
         {
-            Logger logger = new Logger(WriteTheLogEntry);
+            CommonLogger logger = new CommonLogger(WriteTheLogEntry);
 
             LogMore(logger);
             LogWithException(logger);
@@ -27,7 +27,7 @@ namespace UsingLog4NetExample
 
         }
 
-        private static void LogMore(Logger logger)
+        private static void LogMore(CommonLogger logger)
         {
             Stopwatch sw = Stopwatch.StartNew();
             logger.LogDebug(typeof(Program), "with MORE");
@@ -36,7 +36,7 @@ namespace UsingLog4NetExample
             logger.LogInfo(typeof(Program), "How much time to log", "", sw.Elapsed);
         }
 
-        private static void LogWithException(Logger logger)
+        private static void LogWithException(CommonLogger logger)
         {
             try
             {
