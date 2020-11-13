@@ -16,6 +16,11 @@ namespace Common.AsyncLogging
         public string ApplicationName { get; set; }
 
         /// <summary>
+        /// The domain of the application
+        /// </summary>
+        public string ApplicationDomain { get; set; }
+
+        /// <summary>
         /// Application Version
         /// </summary>
         public string Version { get; set; }

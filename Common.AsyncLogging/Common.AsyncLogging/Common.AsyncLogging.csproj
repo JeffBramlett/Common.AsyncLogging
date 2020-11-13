@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,17 +10,19 @@
     <PackageTags>logging,asynchronous</PackageTags>
     <PackageProjectUrl>http://www.aboutjeffbramlett.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeffBramlett/Common.AsyncLogging</RepositoryUrl>
-    <PackageReleaseNotes>Made LogLevels bitwise to allow configuration to control logging by level
+    <PackageReleaseNotes>Improved performance
+Changed Logger to CommonLogger to prevent naming confusion
+Made LogLevels bitwise to allow configuration to control logging by level
 Added Process ID and ProcessName to ApplicationMetadata
 Update Application Metadata
 Added Correlation Id to logging
 Numeric elasped time added (double for elasped milliseconds)</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.9</Version>
-    <AssemblyVersion>1.0.9.0</AssemblyVersion>
+    <Version>1.0.11</Version>
+    <AssemblyVersion>1.0.11.0</AssemblyVersion>
     <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
     <Company>About Jeff Bramlett</Company>
-    <FileVersion>1.0.9.0</FileVersion>
+    <FileVersion>1.0.11.0</FileVersion>
   </PropertyGroup>
 
 </Project>

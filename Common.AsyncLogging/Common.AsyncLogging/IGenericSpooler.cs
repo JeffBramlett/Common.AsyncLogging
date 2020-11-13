@@ -15,15 +15,6 @@ namespace Common.AsyncLogging
         /// <param name="item"></param>
         void AddItem(T item, bool itemCausesStop = false);
 
-        /// <summary>
-        /// Stop spooling for now
-        /// </summary>
-        void Stop();
-
-        /// <summary>
-        /// Resume spooling after being stopped
-        /// </summary>
-        void Resume();
 
         /// <summary>
         /// Some exception happened in the spool, either in the spooler or in the message handler

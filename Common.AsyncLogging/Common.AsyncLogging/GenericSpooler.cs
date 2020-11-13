@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Common.AsyncLogging
 {
@@ -27,32 +28,6 @@ namespace Common.AsyncLogging
         /// Threadsafe collection class
         /// </summary>
         readonly ConcurrentQueue<ItemMetaData> _inputs;
-
-        /// <summary>
-        /// The worker thread that supplies each item to the callback
-        /// </summary>
-        Thread _processWorkerThread;
-
-        /// <summary>
-        /// Wait handles to control process flow
-        /// </summary>
-        readonly WaitHandle[] _operationHandles;
-
-        /// <summary>
-        /// Traffic stop/go control event
-        /// </summary>
-        AutoResetEvent _trafficEvent;
-
-        /// <summary>
-        /// Signal this event to stop the spooler and exit the process thread
-        /// </summary>
-        AutoResetEvent _exitEvent;
-
-        /// <summary>
-        /// Pause/Resume control event
-        /// </summary>
-        ManualResetEvent _itemActionEvent;
-
         #endregion
 
         #region Properties
@@ -94,15 +69,6 @@ namespace Common.AsyncLogging
         {
             _inputs = new ConcurrentQueue<ItemMetaData>();
             SpoolerAction = ProcessSpooledItem;
-
-            _trafficEvent = new AutoResetEvent(false);
-            _exitEvent = new AutoResetEvent(false);
-            _itemActionEvent = new ManualResetEvent(true);
-
-            _operationHandles = new WaitHandle[2];
-            _operationHandles[0] = _trafficEvent;
-            _operationHandles[1] = _exitEvent;
-
         }
 
         protected virtual void ProcessSpooledItem(T item)
@@ -124,13 +90,6 @@ namespace Common.AsyncLogging
             _inputs = new ConcurrentQueue<ItemMetaData>();
             SpoolerAction = spoolerAction;
 
-            _trafficEvent = new AutoResetEvent(false);
-            _exitEvent = new AutoResetEvent(false);
-            _itemActionEvent = new ManualResetEvent(true);
-
-            _operationHandles = new WaitHandle[2];
-            _operationHandles[0] = _trafficEvent;
-            _operationHandles[1] = _exitEvent;
         }
 
         /// <summary>
@@ -161,7 +120,7 @@ namespace Common.AsyncLogging
 
                 _inputs.Enqueue(storedItem);
                 StartProcess();
-                _trafficEvent.Set();
+                //_trafficEvent.Set();
             }
             catch (Exception ex)
             {
@@ -176,15 +135,11 @@ namespace Common.AsyncLogging
         {
             try
             {
-                _itemActionEvent.Reset();
-
                 ItemMetaData ignoredData;
                 while (_inputs.TryDequeue(out ignoredData))
                 {
                     // do nothing; just clear the queue
                 }
-
-                _itemActionEvent.Set();
             }
             catch (Exception ex)
             {
@@ -192,35 +147,6 @@ namespace Common.AsyncLogging
             }
         }
 
-        /// <summary>
-        /// Stop spooling items.  Items can still be added/removed/replaced but will not be spooled out
-        /// </summary>
-        public void Stop()
-        {
-            try
-            {
-                _itemActionEvent.Reset();
-            }
-            catch (Exception ex)
-            {
-                NotifyException(this, ex);
-            }
-        }
-
-        /// <summary>
-        /// Starts the spooling again.  All items still in the queue are sent out.
-        /// </summary>
-        public void Resume()
-        {
-            try
-            {
-                _itemActionEvent.Set();
-            }
-            catch (Exception ex)
-            {
-                NotifyException(this, ex);
-            }
-        }
         #endregion
 
         #region Virtuals
@@ -249,15 +175,15 @@ namespace Common.AsyncLogging
         #endregion
 
         #region Privates
+        Task runningTask;
         /// <summary>
         /// Starts the thread that spools the items off the queue (if not yet started)
         /// </summary>
         private void StartProcess()
         {
-            if (_processWorkerThread == null)
+            if(runningTask == null || runningTask.IsCompleted)
             {
-                _processWorkerThread = new Thread(ProcessWhileHasInput);
-                _processWorkerThread.Start();
+                runningTask = Task.Factory.StartNew(() => ProcessWhileHasInput());
             }
         }
 
@@ -271,40 +197,20 @@ namespace Common.AsyncLogging
                 // Keep the thread alive unless the exit event is signaled
                 while (true)
                 {
-                    int iWaitEvent = WaitHandle.WaitAny(_operationHandles);
-
-                    if (_operationHandles[iWaitEvent] == _trafficEvent)
+                    ItemMetaData itemData;
+                    while (_inputs.TryDequeue(out itemData))
                     {
-                        ItemMetaData itemData;
-                        while (_inputs.TryDequeue(out itemData))
-                        {
-                            // allow stop/resume using itemActionEvent signaling
-                            if (_itemActionEvent.WaitOne())
-                            {
-                                try
-                                {
-                                    if (itemData.HoldOnItem)
-                                        _itemActionEvent.Reset();
 
-                                    SpoolerAction(itemData.Item);
-                                }
-                                catch (Exception ex)
-                                {
-                                    NotifyException(SpoolerAction.Target, ex);
-                                }
-                            }
-                        }
-
-                        var spoolerEvent = SpoolerEmpty;
-                        if (spoolerEvent != null)
-                        {
-                            spoolerEvent();
-                        }
+                        SpoolerAction(itemData.Item);
                     }
-                    else if (_operationHandles[iWaitEvent] == _exitEvent)
+
+                    var spoolerEvent = SpoolerEmpty;
+                    if (spoolerEvent != null)
                     {
-                        break;
+                        spoolerEvent();
                     }
+
+                    break;
                 }
             }
             catch (Exception ex)
@@ -342,12 +248,6 @@ namespace Common.AsyncLogging
             // General cleanup logic here
             GeneralDispose();
 
-            // if the process is paused, release it
-            _itemActionEvent.Set();
-
-            // Signal the thread to end and exit
-            _exitEvent.Set();
-
             if (disposing) // Deterministic only cleanup
             {
                 DeterministicDispose();
@@ -357,11 +257,6 @@ namespace Common.AsyncLogging
                 FinalizeDispose();
             }
 
-            // if the worker thread is still running on finalize, abort it!
-            if (_processWorkerThread != null)
-                _processWorkerThread.Interrupt();
-
-            _processWorkerThread = null;
             _isDisposed = true;
         }
 

@@ -53,6 +53,7 @@ namespace UsingLog4NetExample
         private static void WriteTheLogEntry(LogEntry logEntry)
         {
             ILog toLog4Net = LogManager.GetLogger(logEntry.ApplicationMetadata.ApplicationName);
+            
             var logContent = TranslateLogEntryToJson(logEntry);
 
             switch (logEntry.Level)
@@ -88,5 +89,9 @@ namespace UsingLog4NetExample
         }
 
         #endregion
+    }
+
+    public static class Extensions
+    {
     }
 }

@@ -8,7 +8,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Interface for a Logger with Fluent methods
     /// </summary>
-    public interface ILogger : IDisposable
+    public interface ICommonLogger : IDisposable
     {
         /// <summary>
         /// Bitwise enum to limit logging by log levels

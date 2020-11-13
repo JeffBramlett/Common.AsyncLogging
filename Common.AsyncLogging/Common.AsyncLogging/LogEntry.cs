@@ -175,6 +175,7 @@ namespace Common.AsyncLogging
 
             sb.Append($"ApplicationName={ApplicationMetadata.ApplicationName}, ");
             sb.Append($"ApplicationVersion={ApplicationMetadata.Version}, ");
+            sb.Append($"ApplicationDomain={ApplicationMetadata.ApplicationDomain}, ");
             sb.Append($"MachineName={ApplicationMetadata.MachineName}, ");
             sb.Append($"OS={ApplicationMetadata.OS}, ");
             sb.Append($"ProcessId={ApplicationMetadata.ProcessId}, ");

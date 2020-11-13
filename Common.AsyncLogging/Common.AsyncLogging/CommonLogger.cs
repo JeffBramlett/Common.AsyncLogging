@@ -11,7 +11,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Singleton or Object of a Logger
     /// </summary>
-    public class CommonLogger : GenericSpooler<LogEntry>, ILogger
+    public class CommonLogger : GenericSpooler<LogEntry>, ICommonLogger
     {
         #region Private
         private ApplicationMetaData _appMetaData;
@@ -39,6 +39,7 @@ namespace Common.AsyncLogging
 
                         Assembly asm = Assembly.GetEntryAssembly();
                         _appMetaData.ApplicationName = asm.GetName().Name;
+                        _appMetaData.ApplicationDomain = AppDomain.CurrentDomain.FriendlyName;
                         _appMetaData.Version = asm.GetName().Version.ToString();
                     }
                     catch 
@@ -81,7 +82,7 @@ namespace Common.AsyncLogging
         #region Singleton
         private static Lazy<CommonLogger> _instance = new Lazy<CommonLogger>();
 
-        public static ILogger Instance
+        public static ICommonLogger Instance
         {
             get { return _instance.Value; }
         }
