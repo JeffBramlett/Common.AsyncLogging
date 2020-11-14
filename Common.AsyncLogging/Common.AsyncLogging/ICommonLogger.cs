@@ -38,7 +38,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0);
@@ -60,7 +60,7 @@ namespace Common.AsyncLogging
             string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "",
             [CallerMemberName] string caller = "",
             [CallerLineNumber] int lineNo = 0);
@@ -82,7 +82,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "",
             [CallerMemberName] string caller = "",
             [CallerLineNumber] int lineNo = 0);
@@ -104,7 +104,7 @@ namespace Common.AsyncLogging
             string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "",
             [CallerMemberName] string caller = "",
             [CallerLineNumber] int lineNo = 0);
@@ -126,7 +126,7 @@ namespace Common.AsyncLogging
             string correlationId = "", 
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "",
             [CallerMemberName] string caller = "",
             [CallerLineNumber] int lineNo = 0);

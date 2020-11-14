@@ -118,7 +118,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -148,7 +148,7 @@ namespace Common.AsyncLogging
 
             if(customPairs != null)
             {
-                logEntry.CustomPairs = new List<CustomPair>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
             }
 
 
@@ -172,7 +172,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -200,6 +200,11 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
+            if (customPairs != null)
+            {
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+            }
+
             AddItem(logEntry);
         }
 
@@ -220,7 +225,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -250,7 +255,7 @@ namespace Common.AsyncLogging
 
             if (customPairs != null)
             {
-                logEntry.CustomPairs = new List<CustomPair>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
             }
 
             AddItem(logEntry);
@@ -273,7 +278,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -303,7 +308,7 @@ namespace Common.AsyncLogging
 
             if (customPairs != null)
             {
-                logEntry.CustomPairs = new List<CustomPair>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
             }
 
             AddItem(logEntry);
@@ -326,7 +331,7 @@ namespace Common.AsyncLogging
             string correlationId = "",
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<CustomPair> customPairs = null,
+            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -356,7 +361,7 @@ namespace Common.AsyncLogging
 
             if (customPairs != null)
             {
-                logEntry.CustomPairs = new List<CustomPair>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
             }
 
             AddItem(logEntry);

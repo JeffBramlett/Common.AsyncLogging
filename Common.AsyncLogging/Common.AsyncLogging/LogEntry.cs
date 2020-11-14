@@ -5,16 +5,16 @@ using System.Text;
 namespace Common.AsyncLogging
 {
     /// <summary>
-    /// Enumeration of logging levels
+    /// Bitwise Enumeration of logging levels
     /// </summary>
     [Flags]
     public enum LogLevels: short
     {
-        Debug = 0,
-        Info = 1,
-        Warning = 2,
-        Error = 4,
-        Fatal = 8
+        Debug = 1,
+        Info = 2,
+        Warning = 4,
+        Error = 8,
+        Fatal = 16
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ namespace Common.AsyncLogging
         ApplicationMetaData _appMetadata;
         private string _levelName;
         private LogLevels _level;
-        private IList<CustomPair> _customPairs;
+        private IList<KeyValuePair<string, object>> _extendedProperties;
         private TimeSpan _elasped;
         private bool _elaspedChanged;
         private double _elaspedMilliseconds;
@@ -56,12 +56,12 @@ namespace Common.AsyncLogging
         public string Message { get; set; }
 
         /// <summary>
-        /// (optional) the exception to include with this log
+        /// (User input) the exception to include with this log
         /// </summary>
         public Exception Exception { get; set; }
 
         /// <summary>
-        /// (optional) the elasped time to report in this log entry
+        /// User input for the time elasped
         /// </summary>
         public string ElaspedTime
         {
@@ -79,7 +79,7 @@ namespace Common.AsyncLogging
         }
 
         /// <summary>
-        /// The elasped milliseconds of the elasped time
+        /// User input elasped milliseconds of the elasped time
         /// </summary>
         public double ElaspedMilliseconds
         {
@@ -94,14 +94,14 @@ namespace Common.AsyncLogging
         /// <summary>
         /// Custom key/value pair Collection in the logEntry
         /// </summary>
-        public IList<CustomPair> CustomPairs
+        public IList<KeyValuePair<string, object>> ExtendedProperties
         {
             get
             {
-                _customPairs = _customPairs ?? new List<CustomPair>();
-                return _customPairs;
+                _extendedProperties = _extendedProperties ?? new List<KeyValuePair<string, object>>();
+                return _extendedProperties;
             }
-            set { _customPairs = value; }
+            set { _extendedProperties = value; }
         }
 
         /// <summary>
@@ -160,9 +160,9 @@ namespace Common.AsyncLogging
                 sb.Append($"ElaspedMilliseconds={ElaspedMilliseconds}, ");
             }
 
-            if(_customPairs != null)
+            if(_extendedProperties != null)
             {
-                foreach(var pair in CustomPairs)
+                foreach(var pair in ExtendedProperties)
                 {
                     sb.Append($"{pair.Key}={pair.Value}, ");
                 }

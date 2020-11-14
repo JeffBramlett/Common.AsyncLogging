@@ -200,15 +200,10 @@ namespace Common.AsyncLogging
                     ItemMetaData itemData;
                     while (_inputs.TryDequeue(out itemData))
                     {
-
                         SpoolerAction(itemData.Item);
                     }
 
-                    var spoolerEvent = SpoolerEmpty;
-                    if (spoolerEvent != null)
-                    {
-                        spoolerEvent();
-                    }
+                    SpoolerEmpty?.Invoke();
 
                     break;
                 }
@@ -228,10 +223,7 @@ namespace Common.AsyncLogging
         /// <param name="ex"></param>
         private void NotifyException(object sender, Exception ex)
         {
-            if (ExceptionEncountered != null)
-            {
-                ExceptionEncountered(sender, ex);
-            }
+            ExceptionEncountered?.Invoke(sender, ex);
         }
 
         #endregion
