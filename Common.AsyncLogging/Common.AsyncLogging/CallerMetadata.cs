@@ -7,7 +7,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// The caller meta data
     /// </summary>
-    public class ModuleMetadata
+    public struct ModuleMetadata
     {
         /// <summary>
         /// The name of the module (class)

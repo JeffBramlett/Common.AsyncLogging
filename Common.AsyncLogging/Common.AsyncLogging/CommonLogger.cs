@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Common.AsyncLogging
@@ -34,6 +35,7 @@ namespace Common.AsyncLogging
                     {
                         _appMetaData.MachineName = Environment.MachineName;
                         _appMetaData.OS = Environment.OSVersion.VersionString;
+
                         _appMetaData.ProcessId = Process.GetCurrentProcess().Id;
                         _appMetaData.ProcessName = Process.GetCurrentProcess().ProcessName;
 
@@ -41,6 +43,7 @@ namespace Common.AsyncLogging
                         _appMetaData.ApplicationName = asm.GetName().Name;
                         _appMetaData.ApplicationDomain = AppDomain.CurrentDomain.FriendlyName;
                         _appMetaData.Version = asm.GetName().Version.ToString();
+
                     }
                     catch 
                     {
@@ -107,32 +110,34 @@ namespace Common.AsyncLogging
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
         /// <param name="correlationId">a user supplied correlation id</param>
+        /// <param name="extendedProperties">Custom key-value pair enumeration</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
-        /// <param name="customPairs">Custom key-value pair enumeration</param>
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogDebug(Type type, 
             string message = "",
             string correlationId = "",
+            IList<KeyValuePair<string, object>> extendedProperties = null,
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Debug))
                 return;
-
+            
             var logEntry = new LogEntry()
             {
-                ApplicationMetadata = AppMetaData,
+                ApplicationMetadata = AppMetaData.Clone(),
                 Message = message,
                 Exception = ex,
                 CorrelationId = correlationId,
                 Level = LogLevels.Debug,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
@@ -146,9 +151,9 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if(customPairs != null)
+            if(extendedProperties != null)
             {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
             }
 
 
@@ -161,18 +166,18 @@ namespace Common.AsyncLogging
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
         /// <param name="correlationId">a user supplied correlation id</param>
+        /// <param name="extendedProperties">Custom key-value pair enumeration</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
-        /// <param name="customPairs">Custom key-value pair enumeration</param>
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogError(Type type, 
             string message = "",
             string correlationId = "",
+            IList<KeyValuePair<string, object>> extendedProperties = null,
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -182,11 +187,13 @@ namespace Common.AsyncLogging
 
             var logEntry = new LogEntry()
             {
-                ApplicationMetadata = AppMetaData,
+                ApplicationMetadata = AppMetaData.Clone(),
                 Message = message,
                 CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Error,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
@@ -200,9 +207,9 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if (customPairs != null)
+            if (extendedProperties != null)
             {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
             }
 
             AddItem(logEntry);
@@ -214,18 +221,18 @@ namespace Common.AsyncLogging
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
         /// <param name="correlationId">a user supplied correlation id</param>
+        /// <param name="extendedProperties">Custom key-value pair enumeration</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
-        /// <param name="customPairs">Custom key-value pair enumeration</param>
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogFatal(Type type, 
             string message = "",
             string correlationId = "",
+            IList<KeyValuePair<string, object>> extendedProperties = null,
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -235,11 +242,13 @@ namespace Common.AsyncLogging
 
             var logEntry = new LogEntry()
             {
-                ApplicationMetadata = AppMetaData,
+                ApplicationMetadata = AppMetaData.Clone(),
                 Message = message,
                 CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Fatal,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
@@ -253,9 +262,9 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if (customPairs != null)
+            if (extendedProperties != null)
             {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
             }
 
             AddItem(logEntry);
@@ -267,18 +276,18 @@ namespace Common.AsyncLogging
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
         /// <param name="correlationId">a user supplied correlation id</param>
+        /// <param name="extendedProperties">Custom key-value pair enumeration</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
-        /// <param name="customPairs">Custom key-value pair enumeration</param>
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogInfo(Type type, 
             string message = "",
             string correlationId = "",
+            IList<KeyValuePair<string, object>> extendedProperties = null,
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -288,11 +297,13 @@ namespace Common.AsyncLogging
 
             var logEntry = new LogEntry()
             {
-                ApplicationMetadata = AppMetaData,
+                ApplicationMetadata = AppMetaData.Clone(),
                 Message = message,
                 CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Info,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
@@ -306,9 +317,9 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if (customPairs != null)
+            if (extendedProperties != null)
             {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
             }
 
             AddItem(logEntry);
@@ -320,18 +331,18 @@ namespace Common.AsyncLogging
         /// <param name="type">the module(class) type</param>
         /// <param name="message">the message to log (optional)</param>
         /// <param name="correlationId">a user supplied correlation id</param>
+        /// <param name="extendedProperties">Custom key-value pair enumeration</param>
         /// <param name="elaspedTime">the elasped time for the LogEntry (optional)</param>
         /// <param name="ex">The exception to include in the LogEntry (optional)</param>
-        /// <param name="customPairs">Custom key-value pair enumeration</param>
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
         public void LogWarning(Type type, 
             string message = "",
             string correlationId = "",
+            IList<KeyValuePair<string, object>> extendedProperties = null,
             TimeSpan? elaspedTime = null, 
             Exception ex = null,
-            IList<KeyValuePair<string, object>> customPairs = null,
             [CallerFilePath] string filepath = "", 
             [CallerMemberName] string caller = "", 
             [CallerLineNumber] int lineNo = 0)
@@ -341,11 +352,13 @@ namespace Common.AsyncLogging
 
             var logEntry = new LogEntry()
             {
-                ApplicationMetadata = AppMetaData,
+                ApplicationMetadata = AppMetaData.Clone(),
                 Message = message,
                 CorrelationId = correlationId,
                 Exception = ex,
                 Level = LogLevels.Warning,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
                 Timestamp = DateTimeOffset.Now,
                 ModuleMetadata = new ModuleMetadata()
                 {
@@ -359,9 +372,9 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if (customPairs != null)
+            if (extendedProperties != null)
             {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(customPairs).ToArray();
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
             }
 
             AddItem(logEntry);

@@ -39,10 +39,10 @@ namespace LogTestInCore
             };
 
             Stopwatch sw = Stopwatch.StartNew();
-            logger.LogWarning(typeof(Program), "with MORE", "LM", null, null, logPairs);
+            logger.LogWarning(typeof(Program), "with MORE", "LM", logPairs, null, null);
             sw.Stop();
 
-            logger.LogInfo(typeof(Program), "How much time to log", "LM", sw.Elapsed);
+            logger.LogInfo(typeof(Program), "How much time to log", "LM", null, sw.Elapsed);
         }
 
         private static void LogWithException(CommonLogger logger)
@@ -54,8 +54,7 @@ namespace LogTestInCore
             }
             catch (Exception ex)
             {
-                logger.LogError(typeof(Program), "Divide by Zero test", "", null, ex);
-
+                logger.LogError(typeof(Program), "Divide by Zero test", "", null, null, ex);
             }
         }
 

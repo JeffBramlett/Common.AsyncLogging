@@ -33,7 +33,7 @@ namespace UsingLog4NetExample
             logger.LogDebug(typeof(Program), "with MORE");
             sw.Stop();
 
-            logger.LogInfo(typeof(Program), "How much time to log", "", sw.Elapsed);
+            logger.LogInfo(typeof(Program), "How much time to log", "", null, sw.Elapsed);
         }
 
         private static void LogWithException(CommonLogger logger)
@@ -45,7 +45,7 @@ namespace UsingLog4NetExample
             }
             catch (Exception ex)
             {
-                logger.LogError(typeof(Program), "Divide by Zero test", "", null, ex);
+                logger.LogError(typeof(Program), "Divide by Zero test", "", null, null, ex);
             }
         }
 

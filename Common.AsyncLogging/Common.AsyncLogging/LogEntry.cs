@@ -91,6 +91,10 @@ namespace Common.AsyncLogging
         /// </summary>
         public DateTimeOffset Timestamp { get; set; }
 
+        public int ThreadId { get; set; }
+
+        public string ThreadName { get; set; }
+
         /// <summary>
         /// Custom key/value pair Collection in the logEntry
         /// </summary>
@@ -111,7 +115,7 @@ namespace Common.AsyncLogging
         {
             get
             {
-                if (_appMetadata == null)
+                if (string.IsNullOrEmpty(_appMetadata.ApplicationName))
                 {
                     _appMetadata = new ApplicationMetaData();
                 }

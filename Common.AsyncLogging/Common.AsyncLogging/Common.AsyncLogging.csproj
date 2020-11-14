@@ -10,7 +10,9 @@
     <PackageTags>logging,asynchronous</PackageTags>
     <PackageProjectUrl>http://www.aboutjeffbramlett.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeffBramlett/Common.AsyncLogging</RepositoryUrl>
-    <PackageReleaseNotes>switched from CustomPair to KeyPair&lt;string, object&gt; for extended properties and more performance inprovements
+    <PackageReleaseNotes>Changed method signatures to make them more useable
+Added ThreadId and ThreadName 
+switched from CustomPair to KeyPair&lt;string, object&gt; for extended properties and more performance inprovements
 Improved performance
 Changed Logger to CommonLogger to prevent naming confusion
 Made LogLevels bitwise to allow configuration to control logging by level
@@ -19,11 +21,11 @@ Update Application Metadata
 Added Correlation Id to logging
 Numeric elasped time added (double for elasped milliseconds)</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.12</Version>
-    <AssemblyVersion>1.0.12.0</AssemblyVersion>
+    <Version>1.0.13</Version>
+    <AssemblyVersion>1.0.13.0</AssemblyVersion>
     <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
     <Company>About Jeff Bramlett</Company>
-    <FileVersion>1.0.12.0</FileVersion>
+    <FileVersion>1.0.13.0</FileVersion>
   </PropertyGroup>
 
 </Project>

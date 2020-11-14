@@ -45,5 +45,23 @@ namespace Common.AsyncLogging
         /// </summary>
         public string ProcessName { get; set; }
         #endregion
+
+        #region public 
+        public ApplicationMetaData Clone()
+        {
+            var clone = new ApplicationMetaData()
+            {
+                ProcessName = ProcessName,
+                ProcessId = ProcessId,
+                OS = OS,
+                MachineName = MachineName,
+                Version = Version,
+                ApplicationName = ApplicationName,
+                ApplicationDomain = ApplicationDomain
+            };
+
+            return clone;
+        }
+        #endregion
     }
 }
