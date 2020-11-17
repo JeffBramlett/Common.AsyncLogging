@@ -41,12 +41,12 @@ namespace MultiThreadedLogging
             }
         }
 
-        private static void WriteTheLogEntry(LogEntry logEntry)
+        private static void WriteTheLogEntry(ILogEntry logEntry)
         {
             ShowLogEntryInConsole(logEntry);
         }
         
-        private static void ShowLogEntryInConsole(LogEntry logEntry)
+        private static void ShowLogEntryInConsole(ILogEntry logEntry)
         {
             string contentToLog = string.Format("{0} - {1}: {2}", logEntry.Timestamp, logEntry.Message, logEntry.CorrelationId);
             Console.WriteLine(logEntry.ToKeyValuePairs());

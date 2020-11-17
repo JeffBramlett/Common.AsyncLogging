@@ -91,8 +91,14 @@ namespace Common.AsyncLogging
         /// </summary>
         public DateTimeOffset Timestamp { get; set; }
 
+        /// <summary>
+        /// Current thread id
+        /// </summary>
         public int ThreadId { get; set; }
 
+        /// <summary>
+        /// Current thread name
+        /// </summary>
         public string ThreadName { get; set; }
 
         /// <summary>
@@ -174,7 +180,7 @@ namespace Common.AsyncLogging
 
             if(Exception != null)
             {
-                sb.Append($"{Exception.GetType()}={Exception.Message}, ");
+                sb.Append($"{Exception.GetType()}={Exception.Message} {Exception.StackTrace}, ");
             }
 
             sb.Append($"ApplicationName={ApplicationMetadata.ApplicationName}, ");

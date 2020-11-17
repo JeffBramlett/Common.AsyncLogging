@@ -8,10 +8,11 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Executing class for simple file writing (one .log file per day)
     /// </summary>
-    public class DefaultFileLog
+    public class DefaultFileLog : IDefaultFileLog
     {
         #region fields
         private string _logPath;
+
         #endregion
 
         #region Properties
@@ -20,14 +21,20 @@ namespace Common.AsyncLogging
         {
             get
             {
-                if (string.IsNullOrEmpty(_logPath) || !Directory.Exists(_logPath))
+                _logPath = string.IsNullOrEmpty(_logPath) ? Environment.CurrentDirectory : _logPath;
+
+                if (!Directory.Exists(_logPath))
                 {
-                    _logPath = Environment.CurrentDirectory;
+                    Directory.CreateDirectory(_logPath);
                 }
 
                 return _logPath;
             }
         }
+
+        private string FilePattern { get; set; }
+
+        private string FileName { get; set; }
         #endregion
 
         #region Ctors and Dtors
@@ -35,9 +42,11 @@ namespace Common.AsyncLogging
         /// Default Ctor
         /// </summary>
         /// <param name="logPath">the directory/folder to contain files</param>
-        public DefaultFileLog(string logPath = "")
+        public DefaultFileLog(string filePattern = "dd-MM-yyyy'.log'", string logPath = "")
         {
             _logPath = logPath;
+            FilePattern = filePattern;
+            FileName = GetFilename();
         }
         #endregion
 
@@ -48,8 +57,7 @@ namespace Common.AsyncLogging
         /// <param name="content">the content to write</param>
         public void WriteToLog(string content)
         {
-            string filename = GetFilename();
-            using (StreamWriter sw = new StreamWriter(filename, true))
+            using (StreamWriter sw = new StreamWriter(FileName, true))
             {
                 sw.WriteLine(content);
             }
@@ -60,11 +68,11 @@ namespace Common.AsyncLogging
 
         private string GetFilename()
         {
-            string filename = string.Format("{0}-{1}-{2}.log", DateTime.Today.Day, DateTime.Today.Month,
-                DateTime.Today.Year);
+            string filename = DateTime.Now.ToString(FilePattern);
 
             return Path.Combine(LogPath, filename);
         }
         #endregion
     }
 }
+ 

@@ -50,7 +50,7 @@ namespace UsingLog4NetExample
         }
 
         #region Write Logs to Log4Net
-        private static void WriteTheLogEntry(LogEntry logEntry)
+        private static void WriteTheLogEntry(ILogEntry logEntry)
         {
             ILog toLog4Net = LogManager.GetLogger(logEntry.ApplicationMetadata.ApplicationName);
             
@@ -76,7 +76,7 @@ namespace UsingLog4NetExample
             }
         }
 
-        private static string TranslateLogEntryToJson(LogEntry logEntry)
+        private static string TranslateLogEntryToJson(ILogEntry logEntry)
         {
             JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
             {

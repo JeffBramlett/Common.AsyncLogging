@@ -58,18 +58,21 @@ namespace LogTestInCore
             }
         }
 
-        private static void WriteTheLogEntry(LogEntry logEntry)
+        private static DefaultFileLog defaultFileLog = new DefaultFileLog();
+
+        private static void WriteTheLogEntry(ILogEntry logEntry)
         {
             var originColor = Console.ForegroundColor;
 
             JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
             {
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
             };
 
             serializerSettings.Converters.Add(new StringEnumConverter());
 
-            string contents = JsonConvert.SerializeObject(logEntry.ToKeyValuePairs());
+            string contents = JsonConvert.SerializeObject(logEntry, serializerSettings);
 
             switch (logEntry.Level)
             {
@@ -96,6 +99,7 @@ namespace LogTestInCore
             }
 
             Console.ForegroundColor = originColor;
+            defaultFileLog.WriteToLog(contents);
         }
 
     }

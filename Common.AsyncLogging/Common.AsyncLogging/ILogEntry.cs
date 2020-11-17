@@ -23,6 +23,10 @@ namespace Common.AsyncLogging
         /// </summary>
         IList<KeyValuePair<string, object>> ExtendedProperties { get; set; }
 
+        int ThreadId { get; set; }
+
+        string ThreadName { get; set; }
+
         /// <summary>
         /// User input elasped milliseconds of the elasped time
         /// </summary>
@@ -57,5 +61,7 @@ namespace Common.AsyncLogging
         /// When this log was entered
         /// </summary>
         DateTimeOffset Timestamp { get; set; }
+
+        string ToKeyValuePairs();
     }
 }

@@ -8,7 +8,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Interface for a Logger with Fluent methods
     /// </summary>
-    public interface ICommonLogger : IDisposable
+    public interface ICommonLogger <T>: IDisposable where T : ILogEntry, new()
     {
         /// <summary>
         /// Bitwise enum to limit logging by log levels
@@ -19,7 +19,7 @@ namespace Common.AsyncLogging
         /// Sets the write action for Log entries (the logger asynchrously spools to this action)
         /// </summary>
         /// <param name="writeAction">the delegate that writes the LogEntry, or, passes to other logger (i.e. Log4Net)</param>
-        void SetWriteAction(Action<LogEntry> writeAction);
+        void SetWriteAction(Action<T> writeAction);
 
         /// <summary>
         /// Log a Debug message
