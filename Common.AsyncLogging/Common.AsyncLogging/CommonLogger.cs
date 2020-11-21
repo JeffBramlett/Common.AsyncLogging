@@ -55,7 +55,7 @@ namespace Common.AsyncLogging
 
         #region protected
 
-        protected override LogEntry CreateLogEntry(LogLevels loglevel, Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, string filepath = "", string caller = "", int lineNo = 0)
+        protected override LogEntry CreateLogEntry(LogLevels loglevel, Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, string filepath = "", string caller = "", int lineNo = 0)
         {
             var logEntry = new LogEntry()
             {
@@ -79,10 +79,7 @@ namespace Common.AsyncLogging
             if (elaspedTime != null)
                 logEntry.ElaspedTime = elaspedTime.Value.ToString();
 
-            if (extendedProperties != null)
-            {
-                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
-            }
+            logEntry.ExtendedProperties = extendedProperties;
 
             return logEntry;
         }

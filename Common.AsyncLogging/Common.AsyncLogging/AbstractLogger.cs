@@ -100,7 +100,7 @@ namespace Common.AsyncLogging
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
-        public void LogDebug(Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
+        public void LogDebug(Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Debug))
                 return;
@@ -123,7 +123,7 @@ namespace Common.AsyncLogging
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
-        public void LogError(Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
+        public void LogError(Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Error))
                 return;
@@ -146,7 +146,7 @@ namespace Common.AsyncLogging
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
-        public void LogFatal(Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
+        public void LogFatal(Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Fatal))
                 return;
@@ -169,7 +169,7 @@ namespace Common.AsyncLogging
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
-        public void LogInfo(Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
+        public void LogInfo(Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Info))
                 return;
@@ -191,7 +191,7 @@ namespace Common.AsyncLogging
         /// <param name="filepath">The filepath where the log originates (supplied by system)</param>
         /// <param name="caller">The calling method (supplied by system)</param>
         /// <param name="lineNo">The line number where the Log originates (supplied by system)/param>
-        public void LogWarning(Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
+        public void LogWarning(Type type, string message = "", string correlationId = "", IDictionary<string, object> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, [CallerFilePath] string filepath = "", [CallerMemberName] string caller = "", [CallerLineNumber] int lineNo = 0)
         {
             if (!AllowedLogLevels.HasFlag(LogLevels.Warning))
                 return;
@@ -233,7 +233,7 @@ namespace Common.AsyncLogging
             Type type,
             string message = "",
             string correlationId = "",
-            IList<KeyValuePair<string, object>> extendedProperties = null,
+            IDictionary<string, object> extendedProperties = null,
             TimeSpan? elaspedTime = null,
             Exception ex = null,
             string filepath = "",

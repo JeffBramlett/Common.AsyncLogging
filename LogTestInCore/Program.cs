@@ -33,9 +33,9 @@ namespace LogTestInCore
 
         private static void LogMore(CommonLogger logger)
         {
-            List<KeyValuePair<string, object>> logPairs = new List<KeyValuePair<string, object>>()
+            IDictionary<string, object> logPairs = new Dictionary<string, object>()
             {
-                new KeyValuePair<string, object>("Custom1", 123245)
+                { "Custom1", 123245 }
             };
 
             Stopwatch sw = Stopwatch.StartNew();

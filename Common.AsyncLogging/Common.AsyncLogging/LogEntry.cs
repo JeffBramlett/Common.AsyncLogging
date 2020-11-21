@@ -26,7 +26,7 @@ namespace Common.AsyncLogging
         Application _appMetadata;
         private string _levelName;
         private LogLevels _level;
-        private IList<KeyValuePair<string, object>> _extendedProperties;
+        private IDictionary<string, object> _extendedProperties;
         private TimeSpan _elasped;
         private bool _elaspedChanged;
         private double _elaspedMilliseconds;
@@ -104,11 +104,11 @@ namespace Common.AsyncLogging
         /// <summary>
         /// Custom key/value pair Collection in the logEntry
         /// </summary>
-        public IList<KeyValuePair<string, object>> ExtendedProperties
+        public IDictionary<string, object> ExtendedProperties
         {
             get
             {
-                _extendedProperties = _extendedProperties ?? new List<KeyValuePair<string, object>>();
+                _extendedProperties = _extendedProperties ?? new Dictionary<string, object>();
                 return _extendedProperties;
             }
             set { _extendedProperties = value; }

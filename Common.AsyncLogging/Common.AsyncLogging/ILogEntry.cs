@@ -21,7 +21,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// Custom key/value pair Collection in the logEntry
         /// </summary>
-        IList<KeyValuePair<string, object>> ExtendedProperties { get; set; }
+        IDictionary<string, object> ExtendedProperties { get; set; }
 
         int ThreadId { get; set; }
 
