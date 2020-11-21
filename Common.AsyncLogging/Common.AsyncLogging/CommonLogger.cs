@@ -12,7 +12,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Singleton or Object of a Logger
     /// </summary>
-    public class CommonLogger : GenericLogger<LogEntry>, ICommonLogger<LogEntry>
+    public class CommonLogger : AbstractLogger<LogEntry>, ICommonLogger<LogEntry>
     {
 
         #region Ctors and Dtors
@@ -55,9 +55,41 @@ namespace Common.AsyncLogging
 
         #region protected
 
-        protected virtual void WriteLogEntry(ILogEntry logEntry)
+        protected override LogEntry CreateLogEntry(LogLevels loglevel, Type type, string message = "", string correlationId = "", IList<KeyValuePair<string, object>> extendedProperties = null, TimeSpan? elaspedTime = null, Exception ex = null, string filepath = "", string caller = "", int lineNo = 0)
         {
+            var logEntry = new LogEntry()
+            {
+                Application = Application.Clone(),
+                Message = message,
+                CorrelationId = correlationId,
+                Exception = ex,
+                Level = loglevel,
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+                ThreadName = Thread.CurrentThread.Name,
+                Timestamp = DateTimeOffset.Now,
+                Module = new Module()
+                {
+                    CallerFile = filepath.Substring(filepath.LastIndexOf(Path.DirectorySeparatorChar) + 1),
+                    CallerMethod = caller,
+                    LineNo = lineNo,
+                    ModuleName = type.Name
+                }
+            };
 
+            if (elaspedTime != null)
+                logEntry.ElaspedTime = elaspedTime.Value.ToString();
+
+            if (extendedProperties != null)
+            {
+                logEntry.ExtendedProperties = new List<KeyValuePair<string, object>>(extendedProperties).ToArray();
+            }
+
+            return logEntry;
+        }
+
+        protected override void WriteLogEntry(LogEntry logEntry)
+        {
+            throw new Exception("WriteLogEntry delegate has not been set.  Call SetWriteAction(Action<T> writeAction) to set the delegate, or override the WriteLogEntry method.");
         }
 
         #endregion

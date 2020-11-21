@@ -7,18 +7,18 @@ namespace Common.AsyncLogging
     /// Author: Jeff Bramlett (jeffrey.bramlett@gmail.com)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IGenericSpooler<T> : IDisposable
+    public interface ILogSpooler<T> : IDisposable where T: class
     {
         /// <summary>
         /// Add Item to the spool
         /// </summary>
-        /// <param name="item"></param>
-        void AddItem(T item, bool itemCausesStop = false);
+        /// <param name="LogItem"></param>
+        void AddItem(T LogItem, bool itemCausesStop = false);
 
 
         /// <summary>
         /// Some exception happened in the spool, either in the spooler or in the message handler
         /// </summary>
-        event GenericSpooler<T>.ExceptionEncounteredDelegate ExceptionEncountered;
+        event LogSpooler<T>.ExceptionEncounteredDelegate ExceptionEncountered;
     }
 }

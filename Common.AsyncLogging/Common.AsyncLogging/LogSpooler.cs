@@ -19,7 +19,7 @@ namespace Common.AsyncLogging
     /// item.
     /// </remarks>
     /// <typeparam name="T">The Type of object to provide spooling for</typeparam>
-    public class GenericSpooler<T> : IGenericSpooler<T>
+    public class LogSpooler<T> : ILogSpooler<T> where T:class
     {
         #region Class Scope Members
         bool _isDisposed;
@@ -65,7 +65,7 @@ namespace Common.AsyncLogging
 
         #region Ctors and Dtors
 
-        public GenericSpooler()
+        public LogSpooler()
         {
             _inputs = new ConcurrentQueue<ItemMetaData>();
             SpoolerAction = ProcessSpooledItem;
@@ -80,7 +80,7 @@ namespace Common.AsyncLogging
         /// Default Ctor.  The callback is required.
         /// </summary>
         /// <param name="spoolerAction">the delegate to receive each item from the spool</param>
-        public GenericSpooler(Action<T> spoolerAction)
+        public LogSpooler(Action<T> spoolerAction)
         {
             if (spoolerAction == null)
             {
@@ -95,7 +95,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// Finalizer . . . 
         /// </summary>
-        ~GenericSpooler()
+        ~LogSpooler()
         {
             Dispose(false);
         }

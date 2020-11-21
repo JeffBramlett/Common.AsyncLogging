@@ -52,7 +52,7 @@ namespace UsingLog4NetExample
         #region Write Logs to Log4Net
         private static void WriteTheLogEntry(ILogEntry logEntry)
         {
-            ILog toLog4Net = LogManager.GetLogger(logEntry.ApplicationMetadata.ApplicationName);
+            ILog toLog4Net = LogManager.GetLogger(logEntry.Application.ApplicationName);
             
             var logContent = TranslateLogEntryToJson(logEntry);
 

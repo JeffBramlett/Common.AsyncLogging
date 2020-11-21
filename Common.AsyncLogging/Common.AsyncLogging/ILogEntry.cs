@@ -11,7 +11,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The application data for this log entry
         /// </summary>
-        ApplicationMetaData ApplicationMetadata { get; set; }
+        Application Application { get; set; }
 
         /// <summary>
         /// User assigned correlation id
@@ -55,7 +55,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The caller metadata for this log entry
         /// </summary>
-        ModuleMetadata ModuleMetadata { get; set; }
+        Module Module { get; set; }
 
         /// <summary>
         /// When this log was entered

@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>.Net Standard common logging abstractions to make logging calls asynchronous in an application.  The abstration allows for any logging library (Log4Net and etc) to be used as the library abstractions will "spool" the log entries.</Description>
+    <Description>Made AbstractLogger class to simplify using your own logging class
+.Net Standard common logging abstractions to make logging calls asynchronous in an application.  The abstration allows for any logging library (Log4Net and etc) to be used as the library abstractions will "spool" the log entries.</Description>
     <Authors>Jeff Bramlett</Authors>
     <Copyright>December 2018 @ Jeff Bramlett</Copyright>
     <PackageLicenseUrl>https://github.com/JeffBramlett/Common.AsyncLogging/blob/master/LICENSE</PackageLicenseUrl>
@@ -22,11 +23,11 @@ Update Application Metadata
 Added Correlation Id to logging
 Numeric elasped time added (double for elasped milliseconds)</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.14</Version>
-    <AssemblyVersion>1.0.14.0</AssemblyVersion>
+    <Version>1.0.15</Version>
+    <AssemblyVersion>1.0.15.0</AssemblyVersion>
     <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
     <Company>About Jeff Bramlett</Company>
-    <FileVersion>1.0.14.0</FileVersion>
+    <FileVersion>1.0.15.0</FileVersion>
   </PropertyGroup>
 
 </Project>

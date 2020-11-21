@@ -23,7 +23,7 @@ namespace Common.AsyncLogging
     public class LogEntry : ILogEntry
     {
         #region fields
-        ApplicationMetaData _appMetadata;
+        Application _appMetadata;
         private string _levelName;
         private LogLevels _level;
         private IList<KeyValuePair<string, object>> _extendedProperties;
@@ -117,13 +117,13 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The application data for this log entry
         /// </summary>
-        public ApplicationMetaData ApplicationMetadata
+        public Application Application
         {
             get
             {
                 if (string.IsNullOrEmpty(_appMetadata.ApplicationName))
                 {
-                    _appMetadata = new ApplicationMetaData();
+                    _appMetadata = new Application();
                 }
 
                 return _appMetadata;
@@ -137,7 +137,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The caller metadata for this log entry
         /// </summary>
-        public ModuleMetadata ModuleMetadata { get; set; }
+        public Module Module { get; set; }
         #endregion
 
         #region Ctors and Dtors
@@ -183,18 +183,18 @@ namespace Common.AsyncLogging
                 sb.Append($"{Exception.GetType()}={Exception.Message} {Exception.StackTrace}, ");
             }
 
-            sb.Append($"ApplicationName={ApplicationMetadata.ApplicationName}, ");
-            sb.Append($"ApplicationVersion={ApplicationMetadata.Version}, ");
-            sb.Append($"ApplicationDomain={ApplicationMetadata.ApplicationDomain}, ");
-            sb.Append($"MachineName={ApplicationMetadata.MachineName}, ");
-            sb.Append($"OS={ApplicationMetadata.OS}, ");
-            sb.Append($"ProcessId={ApplicationMetadata.ProcessId}, ");
-            sb.Append($"ProcessName={ApplicationMetadata.ProcessName}, ");
+            sb.Append($"ApplicationName={Application.ApplicationName}, ");
+            sb.Append($"ApplicationVersion={Application.Version}, ");
+            sb.Append($"ApplicationDomain={Application.ApplicationDomain}, ");
+            sb.Append($"MachineName={Application.MachineName}, ");
+            sb.Append($"OS={Application.OS}, ");
+            sb.Append($"ProcessId={Application.ProcessId}, ");
+            sb.Append($"ProcessName={Application.ProcessName}, ");
 
-            sb.Append($"ModuleName={ModuleMetadata.ModuleName}, ");
-            sb.Append($"CallerFile={ModuleMetadata.CallerFile}, ");
-            sb.Append($"CallerMethod={ModuleMetadata.CallerMethod}, ");
-            sb.Append($"LineNo={ModuleMetadata.LineNo}");
+            sb.Append($"ModuleName={Module.ModuleName}, ");
+            sb.Append($"CallerFile={Module.CallerFile}, ");
+            sb.Append($"CallerMethod={Module.CallerMethod}, ");
+            sb.Append($"LineNo={Module.LineNo}");
 
             return sb.ToString();
         }
