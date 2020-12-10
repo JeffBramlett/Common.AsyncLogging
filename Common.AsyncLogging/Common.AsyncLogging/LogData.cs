@@ -20,10 +20,10 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Data class of a Log Entry
     /// </summary>
-    public class LogEntry : ILogEntry
+    public class LogData : ILogData
     {
         #region fields
-        Application _appMetadata;
+        ApplicationData _appMetadata;
         private string _levelName;
         private LogLevels _level;
         private IDictionary<string, object> _extendedProperties;
@@ -117,13 +117,13 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The application data for this log entry
         /// </summary>
-        public Application Application
+        public ApplicationData Application
         {
             get
             {
                 if (string.IsNullOrEmpty(_appMetadata.ApplicationName))
                 {
-                    _appMetadata = new Application();
+                    _appMetadata = new ApplicationData();
                 }
 
                 return _appMetadata;
@@ -137,14 +137,14 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The caller metadata for this log entry
         /// </summary>
-        public Module Module { get; set; }
+        public ModuleData Module { get; set; }
         #endregion
 
         #region Ctors and Dtors
         /// <summary>
         /// Default Ctor
         /// </summary>
-        public LogEntry()
+        public LogData()
         {
             Timestamp = DateTimeOffset.Now;
         }

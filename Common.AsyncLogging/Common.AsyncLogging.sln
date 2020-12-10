@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.AsyncLogging", "Common.AsyncLogging\Common.AsyncLogging.csproj", "{59DAA62F-451A-42D9-843C-2A124888F477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.AsyncLogging", "Common.AsyncLogging\Common.AsyncLogging.csproj", "{59DAA62F-451A-42D9-843C-2A124888F477}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogTestInCore", "..\LogTestInCore\LogTestInCore.csproj", "{D6DA875D-E7C1-49AE-B3B3-358C603556FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadedLogging", "..\MultiThreadedLogging\MultiThreadedLogging.csproj", "{CBE92887-41B2-4139-9F96-70164D146A46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsingLog4NetExample", "..\UsingLog4NetExample\UsingLog4NetExample.csproj", "{E2C581F7-22D5-4186-9E31-C0BAFC728162}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogWriterIntegrationTest", "LogWriterIntegrationTest\LogWriterIntegrationTest.csproj", "{2B572C29-9754-41BC-B3ED-5AF715029090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.AsyncLogging.Core", "Common.AsyncLogging.Core\Common.AsyncLogging.Core.csproj", "{D1BC523C-287D-4B85-ADD5-8D876A82A312}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{E2C581F7-22D5-4186-9E31-C0BAFC728162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C581F7-22D5-4186-9E31-C0BAFC728162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C581F7-22D5-4186-9E31-C0BAFC728162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B572C29-9754-41BC-B3ED-5AF715029090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B572C29-9754-41BC-B3ED-5AF715029090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B572C29-9754-41BC-B3ED-5AF715029090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B572C29-9754-41BC-B3ED-5AF715029090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1BC523C-287D-4B85-ADD5-8D876A82A312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1BC523C-287D-4B85-ADD5-8D876A82A312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1BC523C-287D-4B85-ADD5-8D876A82A312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1BC523C-287D-4B85-ADD5-8D876A82A312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

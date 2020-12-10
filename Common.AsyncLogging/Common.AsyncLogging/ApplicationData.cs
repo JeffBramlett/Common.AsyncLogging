@@ -7,7 +7,7 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Data class for Application Meta data
     /// </summary>
-    public class Application
+    public class ApplicationData
     {
         #region Auto Properties
         /// <summary>
@@ -47,9 +47,9 @@ namespace Common.AsyncLogging
         #endregion
 
         #region public 
-        public Application Clone()
+        public ApplicationData Clone()
         {
-            var clone = new Application()
+            var clone = new ApplicationData()
             {
                 ProcessName = ProcessName,
                 ProcessId = ProcessId,

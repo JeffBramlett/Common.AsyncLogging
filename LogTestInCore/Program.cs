@@ -13,7 +13,8 @@ namespace LogTestInCore
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            CommonLogger logger = new CommonLogger(WriteTheLogEntry);
+            CommonLogger logger = new CommonLogger();
+            logger.LogDataPublish += (sender, logData) => { WriteTheLogEntry(logData); };
 
             sw.Stop();
 
@@ -60,7 +61,7 @@ namespace LogTestInCore
 
         private static DefaultFileLog defaultFileLog = new DefaultFileLog();
 
-        private static void WriteTheLogEntry(ILogEntry logEntry)
+        private static void WriteTheLogEntry(ILogData logEntry)
         {
             var originColor = Console.ForegroundColor;
 

@@ -6,12 +6,12 @@ namespace Common.AsyncLogging
     /// <summary>
     /// Contract for a LogEntry
     /// </summary>
-    public interface ILogEntry
+    public interface ILogData
     {
         /// <summary>
         /// The application data for this log entry
         /// </summary>
-        Application Application { get; set; }
+        ApplicationData Application { get; set; }
 
         /// <summary>
         /// User assigned correlation id
@@ -55,7 +55,7 @@ namespace Common.AsyncLogging
         /// <summary>
         /// The caller metadata for this log entry
         /// </summary>
-        Module Module { get; set; }
+        ModuleData Module { get; set; }
 
         /// <summary>
         /// When this log was entered

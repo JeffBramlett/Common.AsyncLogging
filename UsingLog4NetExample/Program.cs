@@ -15,7 +15,8 @@ namespace UsingLog4NetExample
     {
         static void Main(string[] args)
         {
-            CommonLogger logger = new CommonLogger(WriteTheLogEntry);
+            CommonLogger logger = new CommonLogger();
+            logger.LogDataPublish += Logger_LogDataPublish;
 
             LogMore(logger);
             LogWithException(logger);
@@ -25,6 +26,11 @@ namespace UsingLog4NetExample
 
             logger.Dispose();
 
+        }
+
+        private static void Logger_LogDataPublish(object sender, LogData e)
+        {
+            WriteTheLogEntry(e);
         }
 
         private static void LogMore(CommonLogger logger)
@@ -50,7 +56,7 @@ namespace UsingLog4NetExample
         }
 
         #region Write Logs to Log4Net
-        private static void WriteTheLogEntry(ILogEntry logEntry)
+        private static void WriteTheLogEntry(ILogData logEntry)
         {
             ILog toLog4Net = LogManager.GetLogger(logEntry.Application.ApplicationName);
             
@@ -76,7 +82,7 @@ namespace UsingLog4NetExample
             }
         }
 
-        private static string TranslateLogEntryToJson(ILogEntry logEntry)
+        private static string TranslateLogEntryToJson(ILogData logEntry)
         {
             JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
             {

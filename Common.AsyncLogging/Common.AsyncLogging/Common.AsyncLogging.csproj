@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Made AbstractLogger class to simplify using your own logging class
-.Net Standard common logging abstractions to make logging calls asynchronous in an application.  The abstration allows for any logging library (Log4Net and etc) to be used as the library abstractions will "spool" the log entries.</Description>
+    <Description>.Net Standard common logging abstractions to make logging calls asynchronous in an application.  The abstration allows for any logging library (Log4Net and etc) to be used as the library abstractions will "spool" the log entries.</Description>
     <Authors>Jeff Bramlett</Authors>
     <Copyright>December 2018 @ Jeff Bramlett</Copyright>
     <PackageLicenseUrl>https://github.com/JeffBramlett/Common.AsyncLogging/blob/master/LICENSE</PackageLicenseUrl>
@@ -11,7 +10,11 @@
     <PackageTags>logging,asynchronous</PackageTags>
     <PackageProjectUrl>http://www.aboutjeffbramlett.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeffBramlett/Common.AsyncLogging</RepositoryUrl>
-    <PackageReleaseNotes>Added GenericLogger to allow the use of custom log entry classes
+    <PackageReleaseNotes>Added late-binding log writer abstractions
+Changed names to prevent confusion
+Changed ExtendedProperties to IDictionary&lt;string, object&gt; to make it more useable
+Made AbstractLogger class to simplify using your own logging class
+Added GenericLogger to allow the use of custom log entry classes
 Changed method signatures to make them more useable
 Added ThreadId and ThreadName 
 switched from CustomPair to KeyPair&lt;string, object&gt; for extended properties and more performance inprovements
@@ -23,11 +26,11 @@ Update Application Metadata
 Added Correlation Id to logging
 Numeric elasped time added (double for elasped milliseconds)</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.15</Version>
-    <AssemblyVersion>1.0.15.0</AssemblyVersion>
+    <Version>1.0.18</Version>
+    <AssemblyVersion>1.0.18.0</AssemblyVersion>
     <PackageIconUrl>https://bluejaywebsvc.com/images/bluejaylogo.png</PackageIconUrl>
     <Company>About Jeff Bramlett</Company>
-    <FileVersion>1.0.15.0</FileVersion>
+    <FileVersion>1.0.18.0</FileVersion>
   </PropertyGroup>
 
 </Project>

@@ -15,11 +15,13 @@ namespace Common.AsyncLogging
         /// </summary>
         LogLevels AllowedLogLevels { get; set; }
 
+        event EventHandler<T> LogDataPublish;
+
         /// <summary>
         /// Sets the write action for Log entries (the logger asynchrously spools to this action)
         /// </summary>
         /// <param name="writeAction">the delegate that writes the LogEntry, or, passes to other logger (i.e. Log4Net)</param>
-        void SetWriteAction(Action<T> writeAction);
+        //void SetWriteAction(Action<T> writeAction);
 
         /// <summary>
         /// Log a Debug message

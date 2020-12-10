@@ -1,4 +1,5 @@
 ﻿using Common.AsyncLogging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace MultiThreadedLogging
     {
         static void Main(string[] args)
         {
-            CommonLogger.Instance.SetWriteAction(WriteTheLogEntry);
+            CommonLogger.Instance.LogDataPublish += Instance_LogDataPublish;
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(StartLoop1ToLog));
             ThreadPool.QueueUserWorkItem(new WaitCallback(StartLoop2ToLog));
@@ -22,9 +23,16 @@ namespace MultiThreadedLogging
             CommonLogger.Instance.Dispose();
         }
 
+        private static void Instance_LogDataPublish(object sender, LogData e)
+        {
+            string log = JsonConvert.SerializeObject(e);
+
+            Console.WriteLine(log);
+        }
+
         private static void StartLoop1ToLog(object state)
         {
-            for (var i = 0; i < 100; i++)
+            for ( var i = 0; i < 100; i++)
             {
                 var something = "Loop: 1\tStep:" + i;
                 CommonLogger.Instance.LogInfo(typeof(Program), something, Guid.NewGuid().ToString());
@@ -41,12 +49,12 @@ namespace MultiThreadedLogging
             }
         }
 
-        private static void WriteTheLogEntry(ILogEntry logEntry)
+        private static void WriteTheLogEntry(ILogData logEntry)
         {
             ShowLogEntryInConsole(logEntry);
         }
         
-        private static void ShowLogEntryInConsole(ILogEntry logEntry)
+        private static void ShowLogEntryInConsole(ILogData logEntry)
         {
             string contentToLog = string.Format("{0} - {1}: {2}", logEntry.Timestamp, logEntry.Message, logEntry.CorrelationId);
             Console.WriteLine(logEntry.ToKeyValuePairs());
